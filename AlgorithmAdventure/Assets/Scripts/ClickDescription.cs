@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ClickDescription : MonoBehaviour,  IPointerDownHandler, IPointerUpHandler {
+public class ClickDescription : MonoBehaviour,  IPointerEnterHandler, IPointerExitHandler {
 
-    public void OnPointerDown(PointerEventData eventData) {
-        Debug.Log("Hello");
+    public GameObject potionUI;
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        potionUI.SetActive(true);
+
+        if (Input.GetKey(KeyCode.E)) {
+            Debug.Log("Picked");
+            gameObject.SetActive(false);
+            Debug.Log(gameObject);
+        }
     }
 
-    public void OnPointerUp(PointerEventData eventData) {
-        Debug.Log("Bye");
+    public void OnPointerExit(PointerEventData eventData) {
+        potionUI.SetActive(false);
     }
 
 }
