@@ -7,7 +7,14 @@ public class OutlineSelection : MonoBehaviour
 {
     private Transform highlight;
     private Transform selection;
-    private RaycastHit raycastHit;
+    private Transform raycastHitTransform;
+    private PhysicsRaycaster physicsRaycaster;
+
+    void Start()
+    {
+        // Get the Physics Raycaster from the main camera
+        physicsRaycaster = Camera.main.GetComponent<PhysicsRaycaster>();
+    }
 
     void Update()
     {
@@ -17,10 +24,14 @@ public class OutlineSelection : MonoBehaviour
             highlight.gameObject.GetComponent<Outline>().enabled = false;
             highlight = null;
         }
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit)) //Make sure you have EventSystem in the hierarchy before using EventSystem
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        physicsRaycaster.Raycast(pointerData, results);
+        if (results.Count > 0)
         {
-            highlight = raycastHit.transform;
+            raycastHitTransform = results[0].gameObject.transform;
+            highlight = raycastHitTransform;
             if (highlight.CompareTag("Selectable") && highlight != selection)
             {
                 if (highlight.gameObject.GetComponent<Outline>() != null)
@@ -50,7 +61,7 @@ public class OutlineSelection : MonoBehaviour
                 {
                     selection.gameObject.GetComponent<Outline>().enabled = false;
                 }
-                selection = raycastHit.transform;
+                selection = raycastHitTransform;
                 selection.gameObject.GetComponent<Outline>().enabled = true;
                 highlight = null;
             }
@@ -64,5 +75,5 @@ public class OutlineSelection : MonoBehaviour
             }
         }
     }
-
 }
+
