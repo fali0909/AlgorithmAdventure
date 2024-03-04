@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "606557649562",
+    "project_id": "algorithmadventure-7bb17",
+    "storage_bucket": "algorithmadventure-7bb17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606557649562:android:8b1930f5ba4dc69c58fd23",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.AlgorithmAdventure"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCE0NRv6orwBn51DRmbAZ-Rj0K6s2VG5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
