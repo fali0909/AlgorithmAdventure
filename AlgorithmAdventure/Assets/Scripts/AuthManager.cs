@@ -128,7 +128,7 @@ public class AuthManager : MonoBehaviour
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
             isLoggedIn = true;
-            SceneManager.LoadScene("Village");
+            SceneManager.LoadScene("MainMenuScene");
         }
     }
 
