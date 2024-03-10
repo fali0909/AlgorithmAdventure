@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: 9b885514db0400a469511ed56a4ae1eb
   - enabled: 1
-    path: Assets/SyntyStudios/PolygonAdventure/Scenes/Village.unity
-    guid: e120d0e37ab427a4cb1c20085b85c472
+    path: Assets/Scenes/QuickSortScene.unity
+    guid: af1feb6791b66404ea86d8e76aa18ed0
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7,
       type: 2}
