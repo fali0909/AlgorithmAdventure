@@ -1,28 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(RectTransform))]
-public class TextDrag : MonoBehaviour, IDragHandler, IDropHandler
-{
-    private Vector3 _startPos;
+public class TextDrag : MonoBehaviour, IDragHandler, IDropHandler {
 
-    void Awake()
-    {
-        _startPos = transform.position;
+    private TMP_Text textColorComponent;
+    private Color originalColor;
+
+    private Vector3 startPosition;
+
+    void Awake() {
+        startPosition = transform.position;
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        // Update the position of the UI object while dragging
+    private void Start() {
+        textColorComponent = GetComponent<TMP_Text>();
+        originalColor = textColorComponent.color; 
+    }
+
+    public void OnDrag(PointerEventData eventData){
         transform.position = eventData.position;
+        textColorComponent.color = Color.yellow;
     }
 
-    public void OnDrop(PointerEventData eventData)
-    {
+    public void OnDrop(PointerEventData eventData) {
+        textColorComponent.color = originalColor;
         // Handle dropping logic if needed
         // For example, snap the UI object to a specific position
         // or perform other actions when dropped
     }
+
 }
