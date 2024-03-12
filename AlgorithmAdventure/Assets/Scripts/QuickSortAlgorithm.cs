@@ -2,36 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuickSortAlgorithm : MonoBehaviour{
 
-    [SerializeField] private TMP_Text ran1;
-    [SerializeField] private TMP_Text ran2;
-    [SerializeField] private TMP_Text ran3;
-    [SerializeField] private TMP_Text ran4;
-    [SerializeField] private TMP_Text ran5;
-    [SerializeField] private TMP_Text ran6;
-    [SerializeField] private TMP_Text ran7;
-    [SerializeField] private TMP_Text ran8;
+    //ranNum variables
+    [Header("Random Numbers")]
+    [SerializeField] private  TMP_Text[] ranNum;
 
-    private Vector3 mOffset;
-    private float mZCoord;
+    //box variables
+    [Header("Boxes")]
+    [SerializeField] private  Image[] boxes;
 
-    void OnMouseDown()
-    {
-        mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        mOffset = gameObject.transform.position - GetMouseWorldPos();
+    private void Update() {
+        for (int i = 0; i < Mathf.Min(ranNum.Length, boxes.Length); i++) {
+            if (IsOverlapping(ranNum[i].rectTransform, boxes[i].rectTransform) && Input.GetMouseButtonUp(0)) {
+                Debug.Log("UI Text is overlapping with UI Image");
+            }
+        }
     }
 
-    private Vector3 GetMouseWorldPos()
-    {
-        Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = mZCoord;
-        return Camera.main.ScreenToWorldPoint(mousePoint);
+
+    bool IsOverlapping(RectTransform rectTransform1, RectTransform rectTransform2) {
+        Rect rect1 = GetWorldRect(rectTransform1);
+        Rect rect2 = GetWorldRect(rectTransform2);
+
+        return rect1.Overlaps(rect2);
+    }
+    Rect GetWorldRect(RectTransform rectTransform) {
+        Vector2 size = Vector2.Scale(rectTransform.rect.size, rectTransform.lossyScale);
+        Rect rect = new Rect(rectTransform.position.x, rectTransform.position.y, size.x, size.y);
+        rect.x -= rectTransform.sizeDelta.x * 0.5f;
+        rect.y -= rectTransform.sizeDelta.y * 0.5f;
+
+        return rect;
     }
 
-    void OnMouseDrag()
-    {
-        transform.position = GetMouseWorldPos() + mOffset;
-    }
 }
