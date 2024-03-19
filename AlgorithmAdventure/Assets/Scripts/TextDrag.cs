@@ -28,9 +28,6 @@ public class TextDrag : MonoBehaviour, IDragHandler, IDropHandler {
 
     public void OnDrop(PointerEventData eventData) {
         textColorComponent.color = originalColor;
-        // Handle dropping logic if needed
-        // For example, snap the UI object to a specific position
-        // or perform other actions when dropped
     }
 
 }
