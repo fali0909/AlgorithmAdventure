@@ -16,11 +16,15 @@ public class QuickSortAlgorithm : MonoBehaviour
     [SerializeField] private Image[] boxes;
 
     // Store the last text that was dragged onto each box
-    private TMP_Text[] lastDraggedText;
+    private List<TMP_Text>[] lastDraggedTexts;
 
     private void Start()
     {
-        lastDraggedText = new TMP_Text[boxes.Length];
+        lastDraggedTexts = new List<TMP_Text>[boxes.Length];
+        for (int i = 0; i < boxes.Length; i++)
+        {
+            lastDraggedTexts[i] = new List<TMP_Text>();
+        }
     }
 
     private void Update()
@@ -30,16 +34,25 @@ public class QuickSortAlgorithm : MonoBehaviour
             if (IsOverlapping(ranNum[i].rectTransform, boxes[i].rectTransform) && Input.GetMouseButtonUp(0))
             {
                 // Only log the text if it's the first one being dragged onto the box
-                if (lastDraggedText[i] == null || lastDraggedText[i] != ranNum[i])
+                if (!lastDraggedTexts[i].Contains(ranNum[i]))
                 {
                     Debug.Log("UI Text is overlapping with UI Image");
                     Debug.Log("Text Content: " + ranNum[i].text);
-                    lastDraggedText[i] = ranNum[i];
+                    lastDraggedTexts[i].Add(ranNum[i]);
                 }
             }
         }
-    }
 
+        // Check if the numbers are sorted
+        for (int i = 0; i < boxes.Length; i++)
+        {
+            if (!IsSorted(lastDraggedTexts[i]))
+            {
+                Debug.Log("The numbers in box " + i + " are not sorted.");
+            }
+            
+        }
+    }
 
     bool IsOverlapping(RectTransform rectTransform1, RectTransform rectTransform2)
     {
@@ -58,4 +71,19 @@ public class QuickSortAlgorithm : MonoBehaviour
         return rect;
     }
 
+    bool IsSorted(List<TMP_Text> texts)
+    {
+        for (int i = 1; i < texts.Count; i++)
+        {
+            int currentNumber = int.Parse(texts[i].text);
+            int previousNumber = int.Parse(texts[i - 1].text);
+
+            if (currentNumber < previousNumber)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
