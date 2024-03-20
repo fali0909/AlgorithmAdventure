@@ -3226,6 +3226,15 @@ MonoBehaviour:
   - {fileID: 75042733}
   - {fileID: 269455669}
   - {fileID: 1221678280}
+  invisibleBoxes:
+  - {fileID: 273372795}
+  - {fileID: 676101487}
+  - {fileID: 1887573641}
+  - {fileID: 1311024508}
+  - {fileID: 598958494}
+  - {fileID: 164248459}
+  - {fileID: 1498213005}
+  - {fileID: 841738796}
 --- !u!1 &2075078271
 GameObject:
   m_ObjectHideFlags: 0

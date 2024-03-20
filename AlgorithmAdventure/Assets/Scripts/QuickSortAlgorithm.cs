@@ -14,6 +14,10 @@ public class QuickSortAlgorithm : MonoBehaviour {
     [Header("Boxes")]
     [SerializeField] private Image[] boxes;
 
+    //invisible variables
+    [Header("Invisible boxes")]
+    [SerializeField] private Image[] invisibleBoxes;
+
     private bool[] hasBeenLogged;
 
     private int filledBoxesCount;
@@ -49,30 +53,33 @@ public class QuickSortAlgorithm : MonoBehaviour {
                                     Debug.Log("All boxes have been filled. Numbers are in order");
                                 } else {
                                     Debug.Log("All boxes have been filled. The numbers are not in order.");
+                                    for (int j = 0; j < ranNum.Length; j++) {
+                                        ranNum[j].transform.position = invisibleBoxes[j].transform.position;
+                                    }
                                 }
                             }
                         }
                     }
-                }               
+                }
             }
-        }
 
 
-    bool IsOverlapping(RectTransform rectTransform1, RectTransform rectTransform2) {
-        Rect rect1 = GetWorldRect(rectTransform1);
-        Rect rect2 = GetWorldRect(rectTransform2);
+            bool IsOverlapping(RectTransform rectTransform1, RectTransform rectTransform2) {
+                Rect rect1 = GetWorldRect(rectTransform1);
+                Rect rect2 = GetWorldRect(rectTransform2);
 
-        return rect1.Overlaps(rect2);
-    }
+                return rect1.Overlaps(rect2);
+            }
 
-    Rect GetWorldRect(RectTransform rectTransform) {
-        Vector2 size = Vector2.Scale(rectTransform.rect.size, rectTransform.lossyScale);
-        Rect rect = new Rect(rectTransform.position.x, rectTransform.position.y, size.x, size.y);
-        rect.x -= rectTransform.sizeDelta.x * 0.5f;
-        rect.y -= rectTransform.sizeDelta.y * 0.5f;
+            Rect GetWorldRect(RectTransform rectTransform) {
+                Vector2 size = Vector2.Scale(rectTransform.rect.size, rectTransform.lossyScale);
+                Rect rect = new Rect(rectTransform.position.x, rectTransform.position.y, size.x, size.y);
+                rect.x -= rectTransform.sizeDelta.x * 0.5f;
+                rect.y -= rectTransform.sizeDelta.y * 0.5f;
 
-        return rect;
+                return rect;
 
+            }
         }
     }
 
