@@ -23,8 +23,11 @@ public class QuickSortAlgorithm : MonoBehaviour {
     private void Update() {
         for (int i = 0; i < Mathf.Min(ranNum.Length, boxes.Length); i++) {
             if (IsOverlapping(ranNum[i].rectTransform, boxes[i].rectTransform) && Input.GetMouseButtonUp(0) && !hasBeenLogged[i]) {
-                Debug.Log("Text Content: " + ranNum[i].text);
-                hasBeenLogged[i] = true;
+                if (int.TryParse(ranNum[i].text, out int number)) {
+                    Debug.Log("Integer Value: " + number);
+                    hasBeenLogged[i] = true;
+                }
+                    
             }
         }
 
