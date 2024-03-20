@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Tilemaps.TilemapRenderer;
 
 public class QuickSortAlgorithm : MonoBehaviour {
 
@@ -15,26 +14,18 @@ public class QuickSortAlgorithm : MonoBehaviour {
     [Header("Boxes")]
     [SerializeField] private Image[] boxes;
 
-    //invisible variables
-    [Header("Invisible boxes")]
-    [SerializeField] private Image[] invisibleBoxes;
-
     private bool[] hasBeenLogged;
 
     private int filledBoxesCount;
 
     private List<int> numbersList;
 
-    private bool isInOrder;
-    private List<int> sortedOrder;
+
 
     private void Start() {
         hasBeenLogged = new bool[ranNum.Length];
         filledBoxesCount = 0;
         numbersList = new List<int>();
-        isInOrder = true;
-        sortedOrder = new List<int>();
-
     }
 
     private void Update() {
@@ -46,24 +37,14 @@ public class QuickSortAlgorithm : MonoBehaviour {
                             Debug.Log("Integer Value: " + number);
                             hasBeenLogged[i] = true;
                             numbersList.Add(number);
-                            sortedOrder.Add(i); 
                             filledBoxesCount++;
 
-                            if (!IsInAscendingOrder(numbersList)) {
-                                isInOrder = false;
-                            }
-
                             if (filledBoxesCount == boxes.Length) {
-                                if (!isInOrder) {
-                                    Debug.Log("All boxes have been filled. The numbers are not in order.");
-
-                                    for (int j = 0; j < sortedOrder.Count; j++) {
-                                        int index = sortedOrder[j];
-                                        ranNum[index].transform.position = invisibleBoxes[j].transform.position;
-                                    }
-                                    ResetState();
-                                } else {
+                                if (IsInOrder(numbersList)) {
                                     Debug.Log("All boxes have been filled. Numbers are in order");
+                                } else {
+                                    Debug.Log("All boxes have been filled. The numbers are not in order."); 
+                                    ResetState();
                                 }
                             }
                         }
@@ -73,22 +54,27 @@ public class QuickSortAlgorithm : MonoBehaviour {
         }
     }
 
-    private bool IsInAscendingOrder(List<int> list) {
+    private bool IsInOrder(List<int> list) {
         for (int i = 1; i < list.Count; i++) {
             if (list[i] < list[i - 1]) {
                 return false;
             }
         }
-            return true;
+        return true;
     }
 
     private void ResetState() {
-    hasBeenLogged = new bool[ranNum.Length];
-    filledBoxesCount = 0;
-    numbersList.Clear();
-    sortedOrder.Clear();
-    isInOrder = true;
+        float yOffset = 100f; 
 
+        for (int i = 0; i < ranNum.Length; i++) {
+            Vector3 newPosition = ranNum[i].transform.position;
+            newPosition.y += yOffset;
+            ranNum[i].transform.position = newPosition;
+        }
+
+        hasBeenLogged = new bool[ranNum.Length];
+        filledBoxesCount = 0;
+        numbersList.Clear();
     }
 
 
@@ -108,6 +94,6 @@ public class QuickSortAlgorithm : MonoBehaviour {
 
         return rect;
 
-     }
+    }
 }
 
