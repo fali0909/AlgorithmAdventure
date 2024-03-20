@@ -16,18 +16,44 @@ public class QuickSortAlgorithm : MonoBehaviour {
 
     private bool[] hasBeenLogged;
 
+    private int filledBoxesCount;
+
+    private List<int> numbersList;
+
+    private bool isInOrder;
+
     private void Start() {
         hasBeenLogged = new bool[ranNum.Length];
+        filledBoxesCount = 0;
+        numbersList = new List<int>();
+        isInOrder = true;
     }
 
     private void Update() {
         for (int i = 0; i < Mathf.Min(ranNum.Length, boxes.Length); i++) {
-            if (IsOverlapping(ranNum[i].rectTransform, boxes[i].rectTransform) && Input.GetMouseButtonUp(0) && !hasBeenLogged[i]) {
-                if (int.TryParse(ranNum[i].text, out int number)) {
-                    Debug.Log("Integer Value: " + number);
-                    hasBeenLogged[i] = true;
-                }
-                    
+            if (Input.GetMouseButtonUp(0) && !hasBeenLogged[i]) {
+                foreach (Image box in boxes) {
+                    if (IsOverlapping(ranNum[i].rectTransform, box.rectTransform)) {
+                        if (int.TryParse(ranNum[i].text, out int number)) {
+                            Debug.Log("Integer Value: " + number);
+                            hasBeenLogged[i] = true;
+                            numbersList.Add(number);
+                            filledBoxesCount++;
+
+                            if (numbersList.Count > 1 && number < numbersList[numbersList.Count - 2]) {
+                                isInOrder = false;
+                            }
+
+                            if (filledBoxesCount == boxes.Length) {
+                                if (isInOrder) {
+                                    Debug.Log("All boxes have been filled. Numbers are in order");
+                                } else {
+                                    Debug.Log("All boxes have been filled. The numbers are not in order.");
+                                }
+                            }
+                        }
+                    }
+                }               
             }
         }
 
