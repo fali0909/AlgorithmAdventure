@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class QuickSortAlgorithm : MonoBehaviour {
 
+    //guidance variable
+    [Header("Guidance")]
+    [SerializeField] private TMP_Text guidance;
+
     //ranNum variables
     [Header("Random Numbers")]
     [SerializeField] private TMP_Text[] ranNum;
@@ -41,9 +45,11 @@ public class QuickSortAlgorithm : MonoBehaviour {
 
                             if (filledBoxesCount == boxes.Length) {
                                 if (IsInOrder(numbersList)) {
-                                    Debug.Log("All boxes have been filled. Numbers are in order");
+                                    guidance.text = "Numbers are in order! Well done!";
+                                    //Debug.Log("All boxes have been filled. Numbers are in order");
                                 } else {
-                                    Debug.Log("All boxes have been filled. The numbers are not in order."); 
+                                    guidance.text = "The numbers are not in order";
+                                    //Debug.Log("All boxes have been filled. The numbers are not in order."); 
                                     ResetState();
                                 }
                             }
