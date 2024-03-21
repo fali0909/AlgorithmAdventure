@@ -44,6 +44,7 @@ public class QuickSortAlgorithm : MonoBehaviour {
                             filledBoxesCount++;
 
                             if (filledBoxesCount == boxes.Length) {
+
                                 if (IsInOrder(numbersList)) {
                                     guidance.text = "Numbers are in order! Well done!";
                                     //Debug.Log("All boxes have been filled. Numbers are in order");
