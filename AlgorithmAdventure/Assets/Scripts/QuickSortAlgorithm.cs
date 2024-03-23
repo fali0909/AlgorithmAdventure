@@ -22,35 +22,34 @@ public class QuickSortAlgorithm : MonoBehaviour {
 
     private int filledBoxesCount;
 
-    private List<int> numbersList;
+    private int[] numbersList;
 
 
 
     private void Start() {
         hasBeenLogged = new bool[ranNum.Length];
         filledBoxesCount = 0;
-        numbersList = new List<int>();
+        numbersList = new int[boxes.Length];
     }
 
     private void Update() {
         for (int i = 0; i < ranNum.Length; i++) {
             if (Input.GetMouseButtonUp(0) && !hasBeenLogged[i]) {
-                foreach (Image box in boxes) {
+                for (int j = 0; j < boxes.Length; j++) {
+                    Image box = boxes[j];
                     if (IsOverlapping(ranNum[i].rectTransform, box.rectTransform)) {
                         if (int.TryParse(ranNum[i].text, out int number)) {
                             Debug.Log("Integer Value: " + number);
                             hasBeenLogged[i] = true;
-                            numbersList.Add(number);
+                            numbersList[j] = number; 
                             filledBoxesCount++;
 
                             if (filledBoxesCount == boxes.Length) {
-
                                 if (IsInOrder(numbersList)) {
                                     guidance.text = "Numbers are in order! Well done!";
-                                    //Debug.Log("All boxes have been filled. Numbers are in order");
-                                } else {
+                                }
+                                else {
                                     guidance.text = "The numbers are not in order";
-                                    //Debug.Log("All boxes have been filled. The numbers are not in order."); 
                                     ResetState();
                                 }
                             }
@@ -61,15 +60,14 @@ public class QuickSortAlgorithm : MonoBehaviour {
         }
     }
 
-    private bool IsInOrder(List<int> list) {
-        for (int i = 1; i < list.Count; i++) {
-            if (list[i] < list[i - 1]) {
+    private bool IsInOrder(int[] array) {
+        for (int i = 1; i < array.Length; i++) {
+            if (array[i] < array[i - 1]) {
                 return false;
             }
         }
         return true;
     }
-
     private void ResetState() {
         float yOffset = 100f; 
 
@@ -81,7 +79,7 @@ public class QuickSortAlgorithm : MonoBehaviour {
 
         hasBeenLogged = new bool[ranNum.Length];
         filledBoxesCount = 0;
-        numbersList.Clear();
+        numbersList = new int[boxes.Length];
     }
 
 
