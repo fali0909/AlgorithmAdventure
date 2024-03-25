@@ -1,3 +1,5 @@
+#if UNITY_STANDALONE_WIN
+
 using Firebase.Auth;
 using Firebase;
 using System.Collections;
@@ -5,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 public class AuthManager : MonoBehaviour
 {
@@ -212,3 +215,5 @@ public class AuthManager : MonoBehaviour
         }
     }
 }
+
+#endif
